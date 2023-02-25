@@ -34,7 +34,7 @@
         justify-content: space-between;
         margin: 30px 160px 0px;
         // padding-bottom: 30px;
-        border-bottom: $light-grayish-blue 2px solid;
+        border-bottom: $grayish-blue 2px solid;
     }
     .logo-menu {
         display: flex;
@@ -95,8 +95,13 @@
     }
     @media(max-width: 450px) {
         .container{
+            border: none;
             margin-top: 20px;
             padding-bottom: 20px;
+            align-items: center;
+        }
+        .logo-menu {
+            padding: 0px;
         }
         .sneakers-logo {
             img {height: 20px;}

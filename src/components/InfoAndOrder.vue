@@ -80,6 +80,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 50px;
         .counter{
             display: flex;
             justify-content: space-between;
@@ -145,6 +146,16 @@
             align-items: center;
             justify-content: space-between;
             .prev-price{ margin: 0 0 10px 0; }
+        }
+    }
+    @media (max-width: 300px) {
+        .price-discount-prev {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .price-discount {
+            flex-direction: column;
+            align-items: flex-start;
         }
     }
 </style>

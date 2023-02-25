@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <LightboxComponent/>
+        <LightboxComponent @mainImageClicked2MainPart="$emit('mainImageCliked2App')"/>
         <InfoAndOrder/>
     </div>
 </template>

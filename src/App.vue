@@ -3,14 +3,31 @@
     <TopMenuBar/>
   </header>
   <main>
-    <MainPartComponent/>
+    <MainPartComponent @mainImageCliked2App="openPlayer"/>
   </main>
+  <LightboxPlayer v-if="showPlayer" @playerCloseClicked="closePlayer" />
 </template>
 
 <script setup>
 // import HelloWorld from "./components/HelloWorld.vue";
   import TopMenuBar from "./components/TopManuBar.vue";
   import MainPartComponent from "./components/MainPartComponent.vue";
+  import LightboxPlayer from "./components/LightboxPlayer.vue";
+  import {ref, onMounted} from 'vue'
+
+  const showPlayer = ref(false);
+
+  function closePlayer() {
+    showPlayer.value = false;
+  }
+
+  function openPlayer() {
+    showPlayer.value = true;
+  }
+
+  onMounted( () => window.addEventListener('resize', () => {
+    if(innerWidth<450)closePlayer()
+    }));
 </script>
 
 <style>
@@ -18,7 +35,6 @@
   #app {
     font-family: 'Kumbh Sans', sans-serif;
     font-size: 16px;
-    /* background-color: black; */
     padding: 0px;
   }  
   body {

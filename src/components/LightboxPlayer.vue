@@ -1,6 +1,8 @@
 <template>
-    <div class="lightbox">
-            <img @click="mainImageClicked" class="main-image" alt="main image" :src=mainImagePath>
+    <div @click="$emit('playerCloseClicked')" class="background">
+        <div @click.stop class="player">
+            <div @click="$emit('playerCloseClicked')" class="close-btn"><img alt="close button image" :src="closeBtnWhiteIcon"></div>
+            <div class="main-image"><img alt="main image" :src=mainImagePath></div>
             <div class="other-images">
                 <div :class="{ chosen: chosenProductImage === 1 }" @click="showFirstProduct"><img alt="first small image" :src=thumbnail_1><div class="overlay"></div></div>
                 <div :class="{ chosen: chosenProductImage === 2 }" @click="showSecondProduct"><img alt="second small image" :src=thumbnail_2><div class="overlay"></div></div>
@@ -9,13 +11,16 @@
             </div>
             <div class="navigation">
                 <div @click="previousClicked" class="previous-btn"><img alt="prev arrow image" :src="prevArrow"></div>
+                <div class="placeholder"></div>
                 <div @click="nextClicked" class="next-btn"><img alt="next arrow image" :src="nextArrow"></div>
             </div>
         </div>
+    </div>
 </template>
 
 <script setup>
     import {ref} from 'vue'
+    import closeBtnWhiteIcon from '../assets/images/icon-close-white.svg'
     import thumbnail_1 from '/src/assets/images/image-product-1-thumbnail.jpg'
     import thumbnail_2 from '/src/assets/images/image-product-2-thumbnail.jpg'
     import thumbnail_3 from '/src/assets/images/image-product-3-thumbnail.jpg'
@@ -44,17 +49,12 @@
     function showThirdProduct(){
         mainImagePath.value = product_3;
         chosenProductImage.value = 3;
+
     }
 
     function showFourthProduct(){
         mainImagePath.value = product_4;
         chosenProductImage.value = 4;
-    }
-
-    // const windowWidth = ref(window.innerWidth)
-    const emit = defineEmits(['mainImageClicked2MainPart']);
-    function mainImageClicked() {
-        if(innerWidth > 450) emit('mainImageClicked2MainPart');
     }
 
     function previousClicked(){
@@ -97,7 +97,7 @@
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
     $orange: hsl(26, 100%, 55%);
     $pale-orange: hsl(25, 100%, 94%);
     $very-dark-blue: hsl(220, 13%, 13%);
@@ -106,71 +106,53 @@
     $light-grayish-blue: hsl(223, 64%, 98%);
     $white: hsl(0, 0%, 100%);
     $black: hsl(0, 0%, 0%);
-    .main-image {
-        margin-bottom: 20px;
-        width: 450px;
-        border-radius: 15px; 
-    }
-    .other-images {
-        display: flex;
-        justify-content: space-between;
-        width: 450px;
-        img {
-            width: 90px;
-            border-radius: 10px;
-        }
-        div{
-            width: 90px;
-            height: 90px;
-            border: solid 2px $white;
-            border-radius: 12px;
-        }
-        .overlay {
-                width: 90px;
-                height: 90px;
-                border: none;
-                border-radius: 10px;
-                position: relative;
-                top: -94px;
-            }
-        div:hover {
-            .overlay {
-                background-color: rgba(255, 255, 255, 0.3);
-            }
-        }
-        .chosen {
-            border: solid 3px $orange;
-            border-radius: 12px;
-            .overlay {
-                background-color: rgba(255, 255, 255, 0.7);
-            }
-        }
-        .chosen:hover {
-            .overlay {
-                background-color: rgba(255, 255, 255, 0.7);
-
-            }
-        }
-    }
-    .navigation {
-        display: none;
+    .background {
+        position: fixed;
+        top: 0px;
         width: 100vw;
-        justify-content: space-between;
-        position: absolute;
-        top: 200px;
-        div {
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+        overflow: auto;
+    }
+    .player {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 604px;
+        height: 740px;
+        border: 3px solid transparent;
+        margin: 75px auto;
+        .close-btn {
+            align-self: flex-end;
+            img { width: 22px;}
+            margin: 0px 25px 20px 0px;
+        }
+        .close-btn:hover {
+            img {content: url(../assets/images/icon-close-orange.svg); }
+        }
+        .main-image {
+            margin-bottom: 35px;
+            img {
+                width: 550px;
+                border-radius: 15px;
+            }
+        }
+        .navigation {
+            display: flex;
+            position: relative;
+            top: -450px;
+            div {
                 box-sizing: border-box;
-                width: 45px;
-                height: 45px;
+                width: 55px;
+                height: 55px;
                 border-radius: 40px;
                 background-color: $white;
-                margin: 0px 20px;
             }
             .previous-btn {
-                padding: 13.5px 0px 0px 15px;
+                padding: 18.5px 0px 0px 19px;
             }
             .next-btn {
-                padding: 13.5px 0px 0px 18px;
+                padding: 18.5px 0px 0px 23px;
             }
             .previous-btn:hover {
                 img {content: url(../assets/images/icon-previous-orange.svg); }
@@ -178,19 +160,118 @@
             .next-btn:hover{
                 img {content: url(../assets/images/icon-next-orange.svg); }
             }
-    }
-    @media (max-width: 450px) {
-        .main-image{
-                width: 100vw;
-                height: 300px;
-                border-radius: 0;
-                object-fit: cover;
+            .placeholder {
+                background-color: transparent;
+                width: 494px;
             }
+        }
         .other-images {
+            display: flex;
+            justify-content: space-evenly;
+            width: 520px;
+            img {
+                width: 90px;
+                border-radius: 9px;
+            }
+            div{
+                width: 90px;
+                height: 90px;
+                border: solid 2px transparent;
+                border-radius: 12px;
+            }
+            div .overlay {
+                position: relative;
+                top: -94px;
+            }
+            div:hover {
+                .overlay {
+                    width: 90px;
+                    height: 90px;
+                    border: none;
+                    border-radius: 9px;
+                    position: relative;
+                    top: -94px;
+                    background-color: rgba(255, 255, 255, 0.4);
+                }
+            }
+            .chosen {
+                border: solid 3px $orange;
+                border-radius: 12px;
+                .overlay {
+                    width: 90px;
+                    height: 90px;
+                    border: none;
+                    border-radius: 9px;
+                    position: relative;
+                    top: -94px;
+                    background-color: rgba(255, 255, 255, 0.7);
+                }
+            }
+            .chosen:hover {
+                .overlay {
+                    background-color: rgba(255, 255, 255, 0.7);
+                }
+            }
+        } 
+    }
+    @media(max-height: 815px) {
+        .player{
+            margin: calc(50vh - 310px) auto;
+            height: 620px;
+            .other-images{
+                display: none;
+            }
+            .navigation{
+                top: -350px;
+            }
+        }
+    }
+    @media(max-height: 640px) {
+        .player{
+            width: 450px;
+            height: 500px;
+            margin: calc(50vh - 250px) auto;
+            .main-image img{
+                width: 450px;
+            }
+            .other-images {
+                justify-content:space-evenly;
+                width: 450px;
+            }
+            .navigation{
+                top: -300px;
+                .placeholder{
+                    width: 340px;
+                }
+            }
+        }
+    }
+    @media(max-width: 610px) {
+        .player{
+            width: 450px;
+            height: 500px;
+            margin: calc(50vh - 250px) auto;
+            .main-image img{
+                width: 450px;
+            }
+            .other-images {
+                justify-content:space-evenly;
+                width: 450px;
+                display: none;
+            }
+            .navigation{
+                top: -300px;
+                .placeholder{
+                    width: 340px;
+                }
+            }
+        }
+    }
+    @media(max-width: 450px) { 
+        .background {
             display: none;
         }
-        .navigation {
-            display: flex;
-        }
     }
+
+
 </style>
