@@ -14,11 +14,11 @@
         </div>
         <div class="controls">
             <div class="counter">
-                <div class="decrement"><img alt="minus-sign" src="../assets/images/icon-minus.svg"></div>
-                <div>0</div>
-                <div class="increment"><img alt="plus-sign" src="../assets/images/icon-plus.svg"></div>
+                <div @click="minusClicked" class="decrement"><img alt="minus-sign" src="../assets/images/icon-minus.svg"></div>
+                <div class="order-number">{{ orderNumber }}</div>
+                <div @click="plusClicked" class="increment"><img alt="plus-sign" src="../assets/images/icon-plus.svg"></div>
             </div>
-            <div class="add-to-chart-btn">
+            <div @click="addToCartClicked" class="add-to-chart-btn">
                 <img alt="white cart" src="../assets/images/icon-cart-white.svg">
                 <span>Add to cart</span>
             </div>
@@ -26,15 +26,25 @@
     </div>
 </template>
 
+<script setup>
+    import {ref} from 'vue'
+    const emit = defineEmits(['addToCartClicked']);
+    const orderNumber = ref(0);
+    function minusClicked() {
+        if(orderNumber.value > 0) orderNumber.value--;
+    }
+    function plusClicked() {
+        orderNumber.value++;
+    }
+    function addToCartClicked() {
+        if(orderNumber.value > 0) {
+            emit('addToCartClicked', orderNumber.value);
+            orderNumber.value = 0;
+        }
+    }
+</script>
+
 <style scoped lang="scss">
-    $orange: hsl(26, 100%, 55%);
-    $pale-orange: hsl(25, 100%, 94%);
-    $very-dark-blue: hsl(220, 13%, 13%);
-    $dark-grayish-blue: hsl(219, 9%, 45%);
-    $grayish-blue: hsl(220, 14%, 75%);
-    $light-grayish-blue: hsl(223, 64%, 98%);
-    $white: hsl(0, 0%, 100%);
-    $black: hsl(0, 0%, 0%);
     .info-controls {
         width: 450px;
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="logo-menu">
-            <div class="menu-btn"><img alt="menu button icon" src="../assets/images/icon-menu.svg"></div>
+            <div @click="$emit('openMenuIconClicked')" class="menu-btn"><img alt="menu button icon" src="../assets/images/icon-menu.svg"></div>
             <div class="sneakers-logo"><img alt="sneakers logo" src="../assets/images/logo.svg"></div>
             <div class="menu">
                 <div class="Collections">Collections</div>
@@ -12,28 +12,35 @@
             </div>
         </div>
         <div class="cart-profile">
-            <div class="cart"><img alt="cart-icon" src="../assets/images/icon-cart.svg"></div>
+            <CartComponent v-if="showCart" @deleteIconClicked="$emit('deleteIconClicked')" :orderedNumber="orderedNumber" class="cart-component" />
+            <div @click="cartIconClicked" class="cart"><img alt="cart-icon" src="../assets/images/icon-cart.svg"></div>
+            <div class="notifications"><span>{{ orderedNumber }}</span></div>
             <div class="profile"><img alt="profile-photo" src="../assets/images/image-avatar.png"></div>
         </div>
     </div>
 </template>
 
+<script setup>
+    import CartComponent from "./CartComponent.vue";
+    import {ref} from 'vue'
+    defineProps({
+        orderedNumber: {required: true, type: Number}
+    })
+
+    const showCart = ref(false)
+    function cartIconClicked() {
+        showCart.value = !showCart.value;
+    }
+
+</script>
+
 <style lang="scss" scoped>
-    $orange: hsl(26, 100%, 55%);
-    $pale-orange: hsl(25, 100%, 94%);
-    $very-dark-blue: hsl(220, 13%, 13%);
-    $dark-grayish-blue: hsl(219, 9%, 45%);
-    $grayish-blue: hsl(220, 14%, 75%);
-    $light-grayish-blue: hsl(223, 64%, 98%);
-    $white: hsl(0, 0%, 100%);
-    $black: hsl(0, 0%, 0%);
     .container {
         display: flex;
         align-items: start;
 
         justify-content: space-between;
         margin: 30px 160px 0px;
-        // padding-bottom: 30px;
         border-bottom: $grayish-blue 2px solid;
     }
     .logo-menu {
@@ -64,11 +71,25 @@
         }
     }
     .cart-profile {
+        position: relative;
         display: flex;
         align-items: center;
     }
     .cart:hover {
         img {content:url(../assets/images/icon-cart-black.svg);}
+    }
+    .notifications {
+        width: 17px;
+        height: 11px;
+        border-radius: 7px;
+        position: absolute;
+        left: 10px;
+        top: 13px;
+        background-color: $orange;
+        font-size: 9px;
+        text-align: center;
+        font-weight: 700;
+        color: $white;
     }
     .profile {
         margin-left: 40px;
@@ -84,10 +105,20 @@
             border: solid 3px $orange
         }
     }
+    .cart-component {
+        position: absolute;
+        z-index: 1;
+        left: -140px;
+        top: 60px;
+
+    }
     @media(max-width: 1100px) {
         .container {
             margin: 30px 30px 0px;
         }
+        .cart-component {
+        left: -250px;
+    }
     }
     @media(max-width: 800px) {
         .menu{ display: none;}
@@ -112,11 +143,25 @@
                 width: 24px;
             }
         }
+        .notifications{
+            top: 1px;
+        }
+        .cart-component {
+            left: calc(-1 * 50vw + 102px - 176px);//centering cart box 102 is width of offset cart image and profile photo are giving and 176 is half of a cart box width 
+        }
+    }
+    @media(max-width: 352px) {
+        .cart-component{
+            left: calc(-1 * 50vw + 102px - 50vw);
+        }
     }
     @media(max-width: 300px) {
         .container {
             margin: 30px 0px 0px;
             .profile { margin: 0px; }
+        }
+        .cart-component{
+            left: calc(-1 * 50vw + 52px - 50vw);
         }
     }
 </style>
