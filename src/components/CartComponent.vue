@@ -68,6 +68,7 @@ const cartIsNotEmpty = computed(() => props.orderedNumber > 0 ? true : false);
     }
     .delete-order img:hover {
         content: url(../assets/images/icon-delete-black.svg);
+        cursor: pointer;
     }
     .description-number-price{
         color: $dark-grayish-blue;
@@ -95,6 +96,7 @@ const cartIsNotEmpty = computed(() => props.orderedNumber > 0 ? true : false);
     }
     .checkout-btn:hover {
         filter: opacity(70%);
+        cursor: pointer;
     }
     .empty-cart-content {
         box-sizing: border-box;

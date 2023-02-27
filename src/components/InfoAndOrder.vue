@@ -106,7 +106,8 @@
                 padding-bottom: 8px;
             }
             .decrement:hover, .increment:hover{
-                filter: opacity(30%);                
+                filter: opacity(30%);
+                cursor: pointer;
             }
 
         }
@@ -131,6 +132,7 @@
         }
         .add-to-chart-btn:hover {
             filter: opacity(70%);
+            cursor: pointer;
         }
     }
     @media (max-width: 450px) {

@@ -1,12 +1,12 @@
-<template>
+<template @click="hideCart">
   <header>
-    <TopMenuBar @openMenuIconClicked="() => sidebarDisplayed = true" @deleteIconClicked="() => orderedNumber = 0" :orderedNumber="orderedNumber" />
+    <TopMenuBar @cartIconClicked="toggleCartDisplay" @openMenuIconClicked="() => sidebarDisplayed = true" @deleteIconClicked="() => orderedNumber = 0" :orderedNumber="orderedNumber" :showCart="showCart"/>
   </header>
   <main>
     <MainPartComponent @mainImageCliked2App="openPlayer" @addToCartClicked="actualizeCart" />
   </main>
   <LightboxPlayer v-if="showPlayer" @playerCloseClicked="closePlayer" />
-  <SidebarComponent v-if="sidebarDisplayed" @closeSidebar="() => sidebarDisplayed = false" />
+  <SidebarComponent v-if="sidebarDisplayed" @sidebarBackgroundClicked="sidebarDisplayed=false" @closeSidebar="sidebarDisplayed = false" />
 </template>
 
 <script setup>
@@ -38,6 +38,16 @@
   }
 
   const sidebarDisplayed = ref(false)
+
+  const showCart = ref(false);
+  function toggleCartDisplay() {
+    showCart.value = !showCart.value;
+  }
+  function hideCart(){
+    showCart.value = false;
+  }
+  const app = document.getElementById('app');
+  app.addEventListener('click', hideCart);
 </script>
 
 <style>
@@ -50,4 +60,5 @@
   body {
     margin: 0px;
   }
+
 </style>

@@ -122,6 +122,7 @@
         }
         .close-btn:hover {
             img {content: url(../assets/images/icon-close-orange.svg); }
+            cursor: pointer;
         }
         .main-image {
             margin-bottom: 35px;
@@ -149,9 +150,11 @@
             }
             .previous-btn:hover {
                 img {content: url(../assets/images/icon-previous-orange.svg); }
+                cursor: pointer;
             }
             .next-btn:hover{
                 img {content: url(../assets/images/icon-next-orange.svg); }
+                cursor: pointer;
             }
             .placeholder {
                 background-color: transparent;
@@ -185,6 +188,7 @@
                     position: relative;
                     top: -94px;
                     background-color: rgba(255, 255, 255, 0.4);
+                    cursor: pointer;
                 }
             }
             .chosen {
@@ -201,6 +205,7 @@
                 }
             }
             .chosen:hover {
+                cursor: pointer;
                 .overlay {
                     background-color: rgba(255, 255, 255, 0.7);
                 }

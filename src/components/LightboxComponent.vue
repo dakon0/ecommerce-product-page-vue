@@ -101,7 +101,8 @@
     .main-image {
         margin-bottom: 20px;
         width: 450px;
-        border-radius: 15px; 
+        border-radius: 15px;
+        cursor: pointer;
     }
     .other-images {
         display: flex;
@@ -128,6 +129,7 @@
         div:hover {
             .overlay {
                 background-color: rgba(255, 255, 255, 0.3);
+                cursor: pointer;
             }
         }
         .chosen {
@@ -140,7 +142,7 @@
         .chosen:hover {
             .overlay {
                 background-color: rgba(255, 255, 255, 0.7);
-
+                cursor: pointer;
             }
         }
     }
@@ -166,9 +168,11 @@
             }
             .previous-btn:hover {
                 img {content: url(../assets/images/icon-previous-orange.svg); }
+                cursor: pointer;
             }
             .next-btn:hover{
                 img {content: url(../assets/images/icon-next-orange.svg); }
+                cursor: pointer;
             }
     }
     @media (max-width: 450px) {

@@ -4,34 +4,29 @@
             <div @click="$emit('openMenuIconClicked')" class="menu-btn"><img alt="menu button icon" src="../assets/images/icon-menu.svg"></div>
             <div class="sneakers-logo"><img alt="sneakers logo" src="../assets/images/logo.svg"></div>
             <div class="menu">
-                <div class="Collections">Collections</div>
-                <div class="Men">Men</div>
-                <div class="Women">Women</div>
-                <div class="About">About</div>
-                <div class="Contact">Contact</div>
+                <div class="Collections"><a href="#collections">Collections</a></div>
+                <div class="Men"><a href="#men">Men</a></div>
+                <div class="Women"><a href="#women">Women</a></div>
+                <div class="About"><a href="#about">About</a></div>
+                <div class="Contact"><a href="#contact">Contact</a></div>
             </div>
         </div>
         <div class="cart-profile">
-            <CartComponent v-if="showCart" @deleteIconClicked="$emit('deleteIconClicked')" :orderedNumber="orderedNumber" class="cart-component" />
-            <div @click="cartIconClicked" class="cart"><img alt="cart-icon" src="../assets/images/icon-cart.svg"></div>
-            <div class="notifications"><span>{{ orderedNumber }}</span></div>
+            <CartComponent v-if="showCart" @click.stop @deleteIconClicked="$emit('deleteIconClicked')" :orderedNumber="orderedNumber" class="cart-component" />
+            <div @click.stop="$emit('cartIconClicked')" class="cart"><img alt="cart-icon" src="../assets/images/icon-cart.svg"></div>
+            <div v-if="orderedNumber > 0" class="notifications"><span>{{ orderedNumber }}</span></div>
             <div class="profile"><img alt="profile-photo" src="../assets/images/image-avatar.png"></div>
         </div>
     </div>
 </template>
 
 <script setup>
-    import CartComponent from "./CartComponent.vue";
+    import CartComponent from "./CartComponent.vue"
     import {ref} from 'vue'
-    defineProps({
-        orderedNumber: {required: true, type: Number}
+    const props = defineProps({
+        orderedNumber: {required: true, type: Number},
+        showCart: {required: true, type: Boolean}
     })
-
-    const showCart = ref(false)
-    function cartIconClicked() {
-        showCart.value = !showCart.value;
-    }
-
 </script>
 
 <style lang="scss" scoped>
@@ -57,17 +52,24 @@
         display: flex;
         font-weight: 400;
         margin-left: 50px;
-        color: $dark-grayish-blue;
+
         div {
             margin-right: 30px;
             padding-bottom: 40px;
+            a {
+                text-decoration: none;
+                color: $dark-grayish-blue;
+                padding-bottom: 40px;
+
+            }
         }
     }
     .menu{
-        div:hover {
+        a:hover {
             color: $black;
             border-bottom: solid 4px $orange;
             padding-bottom: 36px;
+            cursor: pointer;
         }
     }
     .cart-profile {
@@ -77,6 +79,7 @@
     }
     .cart:hover {
         img {content:url(../assets/images/icon-cart-black.svg);}
+        cursor: pointer;
     }
     .notifications {
         width: 17px;
@@ -102,14 +105,22 @@
     .profile:hover {
         img{
             border-radius: 30px;
-            border: solid 3px $orange
+            border: solid 3px $orange;
+            cursor: pointer;
         }
+    }
+    @keyframes cart-animation {
+        0%   {top:-280px;}
+        50%  {top:80px;}
+        100% {top:60px;}
     }
     .cart-component {
         position: absolute;
         z-index: 1;
         left: -140px;
         top: 60px;
+        animation-name: cart-animation;
+        animation-duration: .5s;
 
     }
     @media(max-width: 1100px) {
