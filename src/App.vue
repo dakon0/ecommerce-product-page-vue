@@ -55,10 +55,10 @@
     font-family: 'Kumbh Sans', sans-serif;
     font-size: 16px;
     padding: 0px;
-  }  
-  body {
-    margin: 0px;
   }
+  // body {//we don't need this anymore as we have CSS normalizer, I guess
+  //   margin: 0px;
+  // }
   @keyframes onLightboxPlayerAppearance{
     0% {opacity: 0%;}
     100% {opacity: 100%;}

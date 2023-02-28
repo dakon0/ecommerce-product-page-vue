@@ -1,5 +1,5 @@
 # ecommerce-product-page-vue
-This is my pet project. I found the design at [frontendmentor website](https://www.frontendmentor.io/challenges/ecommerce-product-page-UPsZ9MJp6). This project was made using **Vite** as a build tool, **Vue.js** framework with **composition API**, and **Sass** CSS preprocessor.
+This is my pet project. I found the design at [frontendmentor website](https://www.frontendmentor.io/challenges/ecommerce-product-page-UPsZ9MJp6). This project was made using **Vite** as a build tool, **Vue.js** framework with **composition API**, and **Sass** CSS preprocessor. Also I've used **CSS animation**, **CSS normalizer** and added *@images* alias into *vite.config.js* file.
 
 
 This template should help get you started developing with Vue 3 in Vite.
