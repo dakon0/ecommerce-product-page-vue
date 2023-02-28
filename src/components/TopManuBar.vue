@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="logo-menu">
-            <div @click="$emit('openMenuIconClicked')" class="menu-btn"><img alt="menu button icon" src="../assets/images/icon-menu.svg"></div>
+            <div class="menu-btn" @mouseover="menuIconSrc = menuIconBlack" @mouseout="menuIconSrc = menuIconGrey" @click="$emit('openMenuIconClicked')"><img alt="menu button icon" :src="menuIconSrc"></div>
             <div class="sneakers-logo"><img alt="sneakers logo" src="../assets/images/logo.svg"></div>
             <div class="menu">
                 <div class="Collections"><a href="#collections">Collections</a></div>
@@ -12,21 +12,33 @@
             </div>
         </div>
         <div class="cart-profile">
-            <CartComponent v-if="showCart" @click.stop @deleteIconClicked="$emit('deleteIconClicked')" :orderedNumber="orderedNumber" class="cart-component" />
-            <div @click.stop="$emit('cartIconClicked')" class="cart"><img alt="cart-icon" src="../assets/images/icon-cart.svg"></div>
-            <div v-if="orderedNumber > 0" class="notifications"><span>{{ orderedNumber }}</span></div>
-            <div class="profile"><img alt="profile-photo" src="../assets/images/image-avatar.png"></div>
+            <CartComponent class="cart-component" v-if="showCart" @click.stop @deleteIconClicked="$emit('deleteIconClicked')" :orderedNumber="orderedNumber" />
+            <div class="cart" @mouseover="cartIconSrc = cartIconBlack" @mouseout="cartIconSrc = cartIconGrey" @click.stop="$emit('cartIconClicked')"><img alt="cart-icon" :src="cartIconSrc"></div>
+            <div class="notifications" v-if="orderedNumber > 0"><span>{{ orderedNumber }}</span></div>
+            <div class="profile"><img alt="profile-photo" :src="profilePhoto"></div>
         </div>
     </div>
 </template>
 
 <script setup>
     import CartComponent from "./CartComponent.vue"
+    import profilePhoto from '@images/image-avatar.png'
+    import cartIconGrey from '/src/assets/images/icon-cart.svg'
+    import cartIconBlack from '/src/assets/images/icon-cart-black.svg'
+    import menuIconGrey from '/src/assets/images/icon-menu.svg'
+    import menuIconBlack from '/src/assets/images/icon-menu-black.svg'
+
+
+    
     import {ref} from 'vue'
     const props = defineProps({
         orderedNumber: {required: true, type: Number},
         showCart: {required: true, type: Boolean}
     })
+
+    const cartIconSrc = ref(cartIconGrey);
+    const menuIconSrc = ref(menuIconGrey);
+
 </script>
 
 <style lang="scss" scoped>
@@ -78,7 +90,7 @@
         align-items: center;
     }
     .cart:hover {
-        img {content:url(../assets/images/icon-cart-black.svg);}
+        // img {content:url(../assets/images/icon-cart-black.svg);}
         cursor: pointer;
     }
     .notifications {

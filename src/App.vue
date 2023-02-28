@@ -5,12 +5,11 @@
   <main>
     <MainPartComponent @mainImageCliked2App="openPlayer" @addToCartClicked="actualizeCart" />
   </main>
-  <LightboxPlayer v-if="showPlayer" @playerCloseClicked="closePlayer" />
-  <SidebarComponent v-if="sidebarDisplayed" @sidebarBackgroundClicked="sidebarDisplayed=false" @closeSidebar="sidebarDisplayed = false" />
+  <LightboxPlayer v-if="showPlayer" @playerCloseClicked="closePlayer" class="lightbox-player"/>
+  <SidebarComponent v-if="sidebarDisplayed" @sidebarBackgroundClicked="sidebarDisplayed=false" @closeSidebar="sidebarDisplayed = false"/>
 </template>
 
 <script setup>
-// import HelloWorld from "./components/HelloWorld.vue";
   import TopMenuBar from "./components/TopManuBar.vue";
   import MainPartComponent from "./components/MainPartComponent.vue";
   import LightboxPlayer from "./components/LightboxPlayer.vue";
@@ -50,7 +49,7 @@
   app.addEventListener('click', hideCart);
 </script>
 
-<style>
+<style lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap');
   #app {
     font-family: 'Kumbh Sans', sans-serif;
@@ -60,5 +59,13 @@
   body {
     margin: 0px;
   }
+  @keyframes onLightboxPlayerAppearance{
+    0% {opacity: 0%;}
+    100% {opacity: 100%;}
+  }
 
+  .lightbox-player {
+    opacity: 100%;
+    animation: onLightboxPlayerAppearance .5s;
+  }
 </style>

@@ -8,7 +8,7 @@
                     <div class="item-description">{{ itemDescription }}</div>
                     <div class="number-price">${{ price }}.00 x {{ orderedNumber }} <span class="total-price">${{ totalPrice }}.00</span></div>
                 </div>
-                <div @click="$emit('deleteIconClicked')" class="delete-order"><img alt="delete button icon" :src="deleteIcon"></div>
+                <div @click="$emit('deleteIconClicked')" @mouseover="deleteIconSrc = deleteIconBlack" @mouseout="deleteIconSrc = deleteIconGrey" class="delete-order"><img alt="delete button icon" :src="deleteIconSrc"></div>
             </div>
             <div class="checkout-btn">Checkout</div>
         </div>
@@ -18,13 +18,16 @@
 
 <script setup>
 import orderedItemImage from '/src/assets/images/image-product-1-thumbnail.jpg'
-import deleteIcon from '/src/assets/images/icon-delete.svg'
+import deleteIconGrey from '/src/assets/images/icon-delete.svg'
+import deleteIconBlack from '/src/assets/images/icon-delete-black.svg'
+
 import {ref, computed} from 'vue'
 
 const props = defineProps({
     orderedNumber: {required: true, type: Number}
 })
 
+const deleteIconSrc = ref(deleteIconGrey)
 const itemDescription = ref('Fall Limited Edtion Sneakers');
 const price = ref(125.0);
 
@@ -32,10 +35,6 @@ const totalPrice = computed(() => price.value * props.orderedNumber);
 
 const cartIsNotEmpty = computed(() => props.orderedNumber > 0 ? true : false);
 
-// const emit = defineEmits([''])
-// function deleteIconClicked() {
-
-// }
 </script>
 
 <style scoped lang="scss">
@@ -67,7 +66,7 @@ const cartIsNotEmpty = computed(() => props.orderedNumber > 0 ? true : false);
         }
     }
     .delete-order img:hover {
-        content: url(../assets/images/icon-delete-black.svg);
+        // content: url(../assets/images/icon-delete-black.svg);
         cursor: pointer;
     }
     .description-number-price{
